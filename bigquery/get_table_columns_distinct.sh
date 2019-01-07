@@ -9,6 +9,7 @@ IFS=$'\n'
 echo "Data set: "
 read dataset
 
+
 echo "Table,Column,Distinct Data" | tee -a tables_columns_distinct.csv
 
 bq query --use_legacy_sql=false --format=json "SELECT table_id FROM \`$dataset.__TABLES_SUMMARY__\`" | jq -r '.[].table_id'  > /tmp/tables
