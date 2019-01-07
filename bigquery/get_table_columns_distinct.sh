@@ -1,6 +1,7 @@
 #!/bin/bash
 
-# This script will ask for a BigQuery Dataset and return all Tables and Columns, as well as unique data in each Row
+# This script will ask for a BigQuery Dataset and return all Tables and Columns, as well as all unique data in each Row
+# When the script completes, a CSV file (tables_columns_distinct.csv) is returned
 
 rm -f tables_columns_distinct.csv
 IFS=$'\n'
