@@ -5,7 +5,6 @@ def get_tables(project_id, dataset):
     """gets a list of BigQuery Tables for a given Project/Dataset"""
     tables = []
     client = bigquery.Client(project=project_id)
-
     dataset_ref = client.dataset(dataset)
     dataset_tables = list(client.list_tables(dataset_ref))
 
