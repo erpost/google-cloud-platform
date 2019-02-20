@@ -26,16 +26,21 @@ def get_columns(project_id, dataset, table):
     return field_names
 
 
+def get_distinct_values(project_id, dataset, table, column):
+    client = bigquery.Client(project=project_id)
+    query_job = client.query("""SELECT DISTINCT {} FROM `{}.{}.{}`""".format(column, project_id, dataset, table))
+    results = query_job.result()
+
+    return results
+
+
 if __name__ == '__main__':
     project_id = input('Project ID: ')
-    if len(project_id) < 1:
-        project_id = 'bigquery-public-data'
     dataset = input('Data set: ')
-    if len(dataset) < 1:
-        dataset = 'samples'
-    table = input('Table: ')
-    if len(table) < 1:
-        table = 'shakespeare'
 
-    print(get_tables(project_id, dataset))
-    print(get_columns(project_id, dataset, table))
+    for table in get_tables(project_id, dataset):
+        print('### Table: {} ###'.format(table))
+        for column in get_columns(project_id, dataset, table):
+            for distinct_value in get_distinct_values(project_id, dataset, table, column):
+                print(distinct_value.values()[0])
+                print(type(distinct_value.values()[0]))
